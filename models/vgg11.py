@@ -55,13 +55,15 @@ class VGG11Encoder(nn.Module):
             nn.MaxPool2d(2, 2),
         )
 
-        # Classification head
+        # Classification head with BatchNorm1d for better generalization
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Linear(512 * 7 * 7, 4096),
+            nn.BatchNorm1d(4096),
             nn.ReLU(inplace=True),
             CustomDropout(p=dropout_p),
             nn.Linear(4096, 4096),
+            nn.BatchNorm1d(4096),
             nn.ReLU(inplace=True),
             CustomDropout(p=dropout_p),
             nn.Linear(4096, num_classes),
@@ -91,4 +93,6 @@ class VGG11Encoder(nn.Module):
             return logits, skips
         return logits
 
-VGG11 = VGG11Encoder # aliasing for autograder
+
+# Alias for autograder compatibility (imports VGG11 from models.vgg11)
+VGG11 = VGG11Encoder
