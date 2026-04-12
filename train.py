@@ -57,9 +57,9 @@ SEG_CKPT = os.path.join("checkpoints", "unet")
 WANDB_ENTITY = "da25s006-indian-institute-of-technology-madras"
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Utilities
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def fix_seed(s=42):
     random.seed(s)
@@ -113,9 +113,9 @@ def log_wandb(d, enabled):
         wandb.log(d)
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Mixup
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def apply_mixup(images, targets, alpha=0.4):
     if alpha <= 0:
@@ -130,9 +130,9 @@ def compute_mixup_loss(loss_fn, preds, ya, yb, lam):
     return lam * loss_fn(preds, ya) + (1.0 - lam) * loss_fn(preds, yb)
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Data loading
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def _gather_aug_records(base_records, data_root):
     """Expand original records to include their augmented copies from images_aug/."""
@@ -186,9 +186,9 @@ def create_dataloaders(args, with_aug=True):
     return dl_train, dl_val, dl_test
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Metrics
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def compute_clf_metrics(pred_list, true_list):
     p, t = np.array(pred_list), np.array(true_list)
@@ -274,9 +274,9 @@ def compute_seg_metrics(pred_mask, gt_mask, n_cls, eps=1e-6):
     }
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Task 1: Classification
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def run_classification(args):
     print(f"\n{'=' * 60}\nTASK 1: Classification\n{'=' * 60}")
@@ -409,9 +409,9 @@ def run_classification(args):
     return top_f1
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Task 2: Localization
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def run_localization(args):
     print(f"\n{'=' * 60}\nTASK 2: Localization\n{'=' * 60}")
@@ -560,9 +560,9 @@ def run_localization(args):
     return best_miou
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Task 3: Segmentation
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def _seg_forward_loss(model, images, masks, ce_fn, nc, use_amp, device):
     """Shared forward + loss computation for segmentation (avoids code duplication)."""
@@ -814,9 +814,9 @@ def run_segmentation(args):
     return best_dice
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # CLI
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def build_args():
     p = argparse.ArgumentParser(description="DA6401 Assignment-2 Training")

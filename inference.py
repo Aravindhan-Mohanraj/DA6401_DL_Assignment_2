@@ -40,9 +40,9 @@ def safe_torch_load(path, map_location=None):
     return torch.load(path, map_location=map_location)
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Constants
-# ═══════════════════════════════════════════════════════════════════════════════
+
 N_BREEDS = 37
 CLF_CKPT = os.path.join("checkpoints", "classifier.pth")
 LOC_CKPT = os.path.join("checkpoints", "localizer.pth")
@@ -53,9 +53,9 @@ RGB_STD = np.array([0.229, 0.224, 0.225])
 SEG_COLORS = np.array([[0, 200, 0], [200, 0, 0], [0, 0, 200]], dtype=np.uint8)
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Shared helpers
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def _denormalize(tensor):
     """[C,H,W] float tensor → [H,W,C] numpy in [0,1]."""
@@ -132,9 +132,9 @@ def _single_iou(box_a, box_b):
     return inter / union
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Classification inference
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def infer_clf(args):
     dev = torch.device(args.device)
@@ -175,9 +175,9 @@ def infer_clf(args):
         print(f"\n  [INFERENCE] Predicted: {breeds.get(idx, 'Unknown')} (id={idx})  Confidence: {conf:.2%}")
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Localization inference
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def _draw_bbox(ax, cx, cy, w, h, img_h, img_w, color, tag="", lw=2):
     x1 = (cx - w / 2) * img_w
@@ -257,9 +257,9 @@ def infer_loc(args):
     print(f"  Mean IoU (full val):    {np.mean(all_ious):.4f}")
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # Segmentation inference
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 def _binary_to_display(binary_pred):
     """Map binary (0/1) prediction to color indices for display."""
@@ -377,9 +377,9 @@ def infer_seg(args):
         print(f"  Saved → {args.save}")
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
+
 # CLI
-# ═══════════════════════════════════════════════════════════════════════════════
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Inference for all tasks")
